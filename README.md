@@ -81,3 +81,5 @@ REACT_APP_PINATA_SECRET = "your_react_app_pinata_secret"
 ```
 npm start
 ```
+
+###
