@@ -1,5 +1,10 @@
 <img src="src/assets/images/Suvisa-logos.jpeg">
 
+## Links
+
+- Link to Demo: ()[https://www.youtube.com/watch?v=fi4TE0CAKUg]
+- Link to Documentation: ()[https://drive.google.com/file/d/1rY42CfHj1oZAKTKVz6Xem2McT0t29YCP/view?usp=sharing]
+
 ## How we built it
 
 ### Frontend
@@ -81,3 +86,5 @@ REACT_APP_PINATA_SECRET = "your_react_app_pinata_secret"
 ```
 npm start
 ```
+
+###
