@@ -1,3 +1,5 @@
+import logo from "../../logo_3.png";
+import fullLogo from "../../full_logo.png";
 import "./Navbar.css";
 import {
   BrowserRouter as Router,
@@ -13,7 +15,57 @@ import CloseIcon from "@mui/icons-material/Close";
 
 function Navbar() {
   const [connected, toggleConnect] = useState(false);
+  const [showConnected, setShowConnected] = useState(connected);
   const location = useLocation();
+  const [currAddress, updateAddress] = useState("0x");
+
+  async function getAddress() {
+    const ethers = require("ethers");
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    const signer = provider.getSigner();
+    const addr = await signer.getAddress();
+    updateAddress(addr);
+  }
+
+  function updateButton() {
+    const ethereumButton = document.querySelector(".enableEthereumButton");
+    ethereumButton.textContent = "Connected";
+    ethereumButton.classList.remove("hover:bg-blue-70");
+    ethereumButton.classList.remove("bg-blue-500");
+    ethereumButton.classList.add("hover:bg-green-70");
+    ethereumButton.classList.add("bg-green-500");
+  }
+
+  async function connectWebsite() {
+    const chainId = await window.ethereum.request({ method: "eth_chainId" });
+
+    await window.ethereum
+      .request({ method: "eth_requestAccounts" })
+      .then(() => {
+        updateButton();
+        console.log("here");
+        getAddress();
+        window.location.replace(location.pathname);
+      });
+  }
+
+  useEffect(() => {
+    let val = window.ethereum.isConnected();
+    if (val) {
+      console.log("here");
+      getAddress();
+      toggleConnect(val);
+      updateButton();
+    }
+
+    window.ethereum.on("accountsChanged", function (accounts) {
+      window.location.replace(location.pathname);
+    });
+  });
+
+  const showHandler = () => {
+    setShowConnected((prev) => !prev);
+  };
 
   return (
     <div className="Topbar">
@@ -52,14 +104,64 @@ function Navbar() {
             </Link>
           </div>
           <div className="">
-            <button className="navbar_right_button enableEthereumButton">
+            <button
+              className="navbar_right_button enableEthereumButton"
+              onClick={connectWebsite}
+            >
               {connected ? "Connected" : "Connect Wallet"}
             </button>
           </div>
         </div>
       </nav>
+      {location.pathname !== "/" &&
+        location.pathname !== "/profile" &&
+        location.pathname !== "/sellNFT" &&
+        showConnected && (
+          <div className="navbar_connection_text">
+            {currAddress !== "0x"
+              ? "Connected to"
+              : "Not Connected. Please login to view NFTs"}{" "}
+            {currAddress !== "0x" ? currAddress.substring(0, 15) + "..." : ""}
+            <CloseIcon className="closeIcon" onClick={showHandler} />
+          </div>
+        )}
     </div>
   );
 }
 
 export default Navbar;
+// <li className="">
+// <ul className="">
+//   {location.pathname === "/marketPlace" ? (
+//     <li className="">
+//       <Link to="/marketPlace">Marketplace</Link>
+//     </li>
+//   ) : (
+//     <li className="">
+
+//     </li>
+//   )}
+//   {location.pathname === "/sellNFT" ? (
+//     <li className="">
+//       <Link to="/sellNFT">List My NFT</Link>
+//     </li>
+//   ) : (
+//     <li className="">
+//       <Link to="/sellNFT">List My NFT</Link>
+//     </li>
+//   )}
+//   {location.pathname === "/profile" ? (
+//     <li className="">
+//       <Link to="/profile">Profile</Link>
+//     </li>
+//   ) : (
+//     <li className="">
+//       <Link to="/profile">Profile</Link>
+//     </li>
+//   )}
+//   <li>
+
+//   </li>
+// </ul>
+// </li>
+// </ul>

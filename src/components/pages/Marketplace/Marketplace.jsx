@@ -104,9 +104,10 @@ export default function Marketplace() {
   );
 }
 /*
+cd Suvisa
 git add .
 git commit -m "connected NFT page with blockchain :zap:"
 git push
 
-baki: navbar,nfttile,home,nftpage,profile,sellnft
+baki: navbar,,home,nftpage,profile,sellnft
 */
