@@ -1,1 +1,1 @@
-<img src="src/assets/images/Suvisa-logos.jpeg" height="600">
+<img src="src/assets/images/Suvisa-logos.jpeg">
