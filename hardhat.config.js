@@ -18,7 +18,7 @@ module.exports = {
       chainId: 1337,
     },
     mumbai: {
-      url: process.env.PRIVATE_URL,
+      url: process.env.PRIVATE_API_URL,
       accounts: [process.env.PRIVATE_KEY],
     },
   },
