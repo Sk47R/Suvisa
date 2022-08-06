@@ -68,7 +68,7 @@ export default function Profile() {
   if (!dataFetched) getNFTData(tokenId);
 
   return (
-    <div className="profileClass" style={{ "min-height": "100vh" }}>
+    <div className="profileClass" style={{ minHeight: "100vh" }}>
       <Navbar></Navbar>
       <div className="profileTop">
         <h1 className="profileTop_Header">#PROFILE</h1>

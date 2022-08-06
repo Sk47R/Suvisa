@@ -1,5 +1,5 @@
 import Navbar from "../../NavBar/Navbar";
-import { useLocation, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import MarketplaceJSON from "../../../Marketplace.json";
 import axios from "axios";
 import { useState } from "react";
@@ -105,15 +105,15 @@ export default function NFTPage(props) {
           <div className="NFTPageDiv_right_content">
             <h1 className="NFTPageDiv_right_content_Header">{data.name}</h1>
             <p className="NFTPageDiv_right_content_Para">
-              {data.description} .The perfect Nfts Nft Bored Ape Animated GIF
-              for your conversation. Discover and Share the best GIFs on Tenor.
+              The perfect Nfts Nft Bored Ape Animated GIF for your conversation.
+              Discover and Share the best GIFs on Tenor.
             </p>
             <div className="NFTPageDiv_right_content_Price">
               <div>Price:</div>
               <div className="NFTPageDiv_right_content_Price_div">
                 <span className="price_span">{data.price}</span>
                 <img
-                  src="https://seeklogo.com/images/P/polygon-matic-logo-1DFDA3A3A8-seeklogo.com.png"
+                  src="https://avatars.githubusercontent.com/u/38262884?v=4"
                   className="eth_symbol"
                   alt=""
                 />

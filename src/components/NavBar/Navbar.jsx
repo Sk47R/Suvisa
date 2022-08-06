@@ -1,9 +1,15 @@
 import "./Navbar.css";
-import { BrowserRouter as Router, Link } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  useRouteMatch,
+  useParams,
+} from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router";
 import CloseIcon from "@mui/icons-material/Close";
-import logo from "../../assets/images/Suvisa-logos_transparent.png";
 
 function Navbar() {
   const [connected, toggleConnect] = useState(false);
@@ -64,8 +70,8 @@ function Navbar() {
       <nav className="navbar">
         <div className="navbar_left">
           <Link to="/">
-            <img src={logo} alt="" width={160} height={160} className="" />
-            {/* <p className="logo">SUVISA</p> */}
+            {/* <img src={fullLogo} alt="" width={120} height={120} className="" /> */}
+            <p className="logo">SUVISA</p>
           </Link>
           <Link to="/marketPlace">
             <div className="navbar_left_nft">NFT Marketplace</div>
@@ -122,38 +128,3 @@ function Navbar() {
 }
 
 export default Navbar;
-// <li className="">
-// <ul className="">
-//   {location.pathname === "/marketPlace" ? (
-//     <li className="">
-//       <Link to="/marketPlace">Marketplace</Link>
-//     </li>
-//   ) : (
-//     <li className="">
-
-//     </li>
-//   )}
-//   {location.pathname === "/sellNFT" ? (
-//     <li className="">
-//       <Link to="/sellNFT">List My NFT</Link>
-//     </li>
-//   ) : (
-//     <li className="">
-//       <Link to="/sellNFT">List My NFT</Link>
-//     </li>
-//   )}
-//   {location.pathname === "/profile" ? (
-//     <li className="">
-//       <Link to="/profile">Profile</Link>
-//     </li>
-//   ) : (
-//     <li className="">
-//       <Link to="/profile">Profile</Link>
-//     </li>
-//   )}
-//   <li>
-
-//   </li>
-// </ul>
-// </li>
-// </ul>
