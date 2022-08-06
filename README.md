@@ -2,8 +2,8 @@
 
 ## Links
 
-- Link to Demo: ()[https://www.youtube.com/watch?v=fi4TE0CAKUg]
-- Link to Documentation: ()[https://drive.google.com/file/d/1rY42CfHj1oZAKTKVz6Xem2McT0t29YCP/view?usp=sharing]
+- Link to Demo: [https://www.youtube.com/watch?v=fi4TE0CAKUg]
+- Link to Documentation: [https://drive.google.com/file/d/1rY42CfHj1oZAKTKVz6Xem2McT0t29YCP/view?usp=sharing]
 
 ## How we built it
 
