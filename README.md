@@ -2,7 +2,7 @@
 
 ## How we built it
 
-#### Frontend
+### Frontend
 
 The following technologies were used to develop the frontend for this project.
 
@@ -11,7 +11,7 @@ The following technologies were used to develop the frontend for this project.
 - JavaScript
 - ReactJS
 
-#### Backend
+### Backend
 
 The following technologies were used to develop the backend for this project.
 

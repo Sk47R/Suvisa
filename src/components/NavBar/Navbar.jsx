@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router";
 import CloseIcon from "@mui/icons-material/Close";
+import logo from "../../assets/images/Suvisa-logos_transparent.png";
 
 function Navbar() {
   const [connected, toggleConnect] = useState(false);
@@ -63,8 +64,8 @@ function Navbar() {
       <nav className="navbar">
         <div className="navbar_left">
           <Link to="/">
-            {/* <img src={fullLogo} alt="" width={120} height={120} className="" /> */}
-            <p className="logo">SUVISA</p>
+            <img src={logo} alt="" width={160} height={160} className="" />
+            {/* <p className="logo">SUVISA</p> */}
           </Link>
           <Link to="/marketPlace">
             <div className="navbar_left_nft">NFT Marketplace</div>
