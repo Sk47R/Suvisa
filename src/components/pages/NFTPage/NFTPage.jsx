@@ -1,22 +1,101 @@
 import Navbar from "../../NavBar/Navbar";
+import { useLocation, useParams } from "react-router-dom";
+import MarketplaceJSON from "../../../Marketplace.json";
+import axios from "axios";
 import { useState } from "react";
 import "./NFTPage.css";
 import CloseIcon from "@mui/icons-material/Close";
 import Footer from "../../Footer/Footer";
 
 export default function NFTPage(props) {
-  const sampleData = {
-    name: "NFT#1",
-    description: "Suvisa First NFT",
-    image:
-      "https://thumbor.forbes.com/thumbor/fit-in/x/https://www.forbes.com/advisor/in/wp-content/uploads/2022/03/monkey-g412399084_1280.jpg",
-    price: "0.03",
+  const [data, updateData] = useState({});
+  const [showMessage, setShowMessage] = useState(false);
+  const [dataFetched, updateDataFetched] = useState(false);
+  const [message, updateMessage] = useState("");
+  const [currAddress, updateCurrAddress] = useState("0x");
+
+  async function getNFTData(tokenId) {
+    const ethers = require("ethers");
+    //After adding your Hardhat network to your metamask, this code will get providers and signers
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    const signer = provider.getSigner();
+    const addr = await signer.getAddress();
+    //Pull the deployed contract instance
+    let contract = new ethers.Contract(
+      MarketplaceJSON.address,
+      MarketplaceJSON.abi,
+      signer
+    );
+    //create an NFT Token
+    const tokenURI = await contract.tokenURI(tokenId);
+    const listedToken = await contract.getListedTokenForId(tokenId);
+    let meta = await axios.get(tokenURI);
+    meta = meta.data;
+    console.log(listedToken);
+
+    let item = {
+      price: meta.price,
+      tokenId: tokenId,
+      seller: listedToken.seller,
+      owner: listedToken.owner,
+      image: meta.image,
+      name: meta.name,
+      description: meta.description,
+    };
+    console.log(item);
+    updateData(item);
+    updateDataFetched(true);
+    console.log("address", addr);
+    updateCurrAddress(addr);
+  }
+
+  async function buyNFT(tokenId) {
+    try {
+      setShowMessage(true);
+      const ethers = require("ethers");
+      //After adding your Hardhat network to your metamask, this code will get providers and signers
+      const provider = new ethers.providers.Web3Provider(window.ethereum);
+      const signer = provider.getSigner();
+
+      //Pull the deployed contract instance
+      let contract = new ethers.Contract(
+        MarketplaceJSON.address,
+        MarketplaceJSON.abi,
+        signer
+      );
+      const salePrice = ethers.utils.parseUnits(data.price, "ether");
+      updateMessage("Buying the NFT... Please Wait (Upto 5 mins)");
+      //run the executeSale function
+      let transaction = await contract.executeSale(tokenId, {
+        value: salePrice,
+      });
+      await transaction.wait();
+
+      alert("You successfully bought the NFT!");
+      updateMessage("");
+    } catch (e) {
+      alert("Upload Error" + e);
+    }
+  }
+
+  const params = useParams();
+  const tokenId = params.tokenId;
+  if (!dataFetched) getNFTData(tokenId);
+
+  const closeMessage = () => {
+    setShowMessage((prev) => !prev);
   };
-  const [data, updateData] = useState(sampleData);
 
   return (
-    <div style={{ minHeight: "100vh" }} className="NFTPage_Main">
+    <div style={{ "min-height": "100vh" }} className="NFTPage_Main">
       <Navbar></Navbar>
+      {/* {message} */}
+      {showMessage && (
+        <div className="message">
+          Buying the NFT please wait
+          <CloseIcon className="closeIcon" onClick={closeMessage} />
+        </div>
+      )}
 
       <div className="NFTPageDiv">
         <div className="NFTPageDiv_left">
@@ -52,9 +131,16 @@ export default function NFTPage(props) {
             </div>
 
             <div className="NFTpage_Detail_bottom">
-              <button className="enableEthereumButton NFTpage_Detail_bottom_button btn btn--color">
-                Buy this NFT
-              </button>
+              {currAddress == data.owner || currAddress == data.seller ? (
+                <div className="own_info">You are the owner of this NFT</div>
+              ) : (
+                <button
+                  className="enableEthereumButton NFTpage_Detail_bottom_button btn btn--color"
+                  onClick={() => buyNFT(tokenId)}
+                >
+                  Buy this NFT
+                </button>
+              )}
             </div>
           </div>
         </div>

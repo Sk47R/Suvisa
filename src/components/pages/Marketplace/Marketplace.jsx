@@ -109,5 +109,5 @@ git add .
 git commit -m "connected NFT page with blockchain :zap:"
 git push
 
-baki: navbar,,home,nftpage,profile,sellnft
+baki: ,,,nftpage,profile,sellnft
 */
