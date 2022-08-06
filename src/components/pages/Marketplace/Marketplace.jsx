@@ -1,34 +1,87 @@
-import NFTTile from "../../NFTTile/NFTTile";
-import Navbar from "../../NavBar/Navbar";
+import Navbar from "../NavBar/Navbar";
+import NFTTile from "../NFTTile/NFTTile";
+import MarketplaceJSON from "../../Marketplace.json";
+import axios from "axios";
 import { useState } from "react";
 import "./Marketplace.css";
-import Footer from "../../Footer/Footer";
+import Footer from "../Footer/Footer";
+
 export default function Marketplace() {
   const sampleData = [
     {
       name: "NFT#1",
       description: "Suvisa First NFT",
+      website: "http://axieinfinity.io",
       image:
-        "https://thumbor.forbes.com/thumbor/fit-in/x/https://www.forbes.com/advisor/in/wp-content/uploads/2022/03/monkey-g412399084_1280.jpg",
+        "https://gateway.pinata.cloud/ipfs/QmTsRJX7r5gyubjkdmzFrKQhHv74p5wT9LdeF1m3RTqrE5",
       price: "0.03",
+      currentlySelling: "True",
+      address: "0xe81Bf5A757CB4f7F82a2F23b1e59bE45c33c5b13",
     },
     {
       name: "NFT#2",
-      description: "Suvisa Second NFT",
+      description: "Alchemy's Second NFT",
+      website: "http://axieinfinity.io",
       image:
-        "https://www.cnet.com/a/img/resize/5a9287797e44d98efa098c9c22ad9857a7cfb9e4/2021/11/29/f566750f-79b6-4be9-9c32-8402f58ba0ef/richerd.png?auto=webp&width=1200",
-      price: "0.02",
+        "https://gateway.pinata.cloud/ipfs/QmdhoL9K8my2vi3fej97foiqGmJ389SMs55oC5EdkrxF2M",
+      price: "0.03",
+      currentlySelling: "True",
+      address: "0xe81Bf5A757C4f7F82a2F23b1e59bE45c33c5b13",
     },
     {
       name: "NFT#3",
-      description: "Suvisa Third NFT",
+      description: "Alchemy's Third NFT",
+      website: "http://axieinfinity.io",
       image:
-        "https://lh6.googleusercontent.com/EF6DVrCepU84x0neXNfy1n8Kto8bgYNi4wHC6ovwUwYAWe1-ivLGzNxj25-qUv4TTZnisOnZ2U40bGgvXHhJwxuCDte3n2dSg2ITgl0KSkqddZb7v0rppW0MvNHdVrCqcwkqmyj2",
+        "https://gateway.pinata.cloud/ipfs/QmTsRJX7r5gyubjkdmzFrKQhHv74p5wT9LdeF1m3RTqrE5",
       price: "0.03",
+      currentlySelling: "True",
+      address: "0xe81Bf5A757C4f7F82a2F23b1e59bE45c33c5b13",
     },
   ];
   const [data, updateData] = useState(sampleData);
   const [dataFetched, updateFetched] = useState(false);
+
+  async function getAllNFTs() {
+    const ethers = require("ethers");
+    //After adding your Hardhat network to your metamask, this code will get providers and signers
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    const signer = provider.getSigner();
+    //Pull the deployed contract instance
+    let contract = new ethers.Contract(
+      MarketplaceJSON.address,
+      MarketplaceJSON.abi,
+      signer
+    );
+    //create an NFT Token
+    let transaction = await contract.getAllNFTs();
+
+    //Fetch all the details of every NFT from the contract and display
+    const items = await Promise.all(
+      transaction.map(async (i) => {
+        const tokenURI = await contract.tokenURI(i.tokenId);
+        let meta = await axios.get(tokenURI);
+        meta = meta.data;
+
+        let price = ethers.utils.formatUnits(i.price.toString(), "ether");
+        let item = {
+          price,
+          tokenId: i.tokenId.toNumber(),
+          seller: i.seller,
+          owner: i.owner,
+          image: meta.image,
+          name: meta.name,
+          description: meta.description,
+        };
+        return item;
+      })
+    );
+
+    updateFetched(true);
+    updateData(items);
+  }
+
+  if (!dataFetched) getAllNFTs();
 
   return (
     <div>
