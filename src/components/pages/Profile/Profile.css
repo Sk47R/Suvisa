@@ -90,3 +90,6 @@
   padding-bottom: 0.5rem;
   border-bottom: 4px solid #ff0069;
 }
+.error-text {
+  margin-bottom: 2rem;
+}

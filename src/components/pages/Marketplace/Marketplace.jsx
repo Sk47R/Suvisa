@@ -1,41 +1,35 @@
-import Navbar from "../NavBar/Navbar";
-import NFTTile from "../NFTTile/NFTTile";
-import MarketplaceJSON from "../../Marketplace.json";
+import Navbar from "../../NavBar/Navbar";
+import NFTTile from "../../NFTTile/NFTTile";
+import MarketplaceJSON from "../../../Marketplace.json";
 import axios from "axios";
 import { useState } from "react";
+import Footer from "../../Footer/Footer";
 import "./Marketplace.css";
-import Footer from "../Footer/Footer";
 
 export default function Marketplace() {
   const sampleData = [
     {
       name: "NFT#1",
       description: "Suvisa First NFT",
-      website: "http://axieinfinity.io",
       image:
-        "https://gateway.pinata.cloud/ipfs/QmTsRJX7r5gyubjkdmzFrKQhHv74p5wT9LdeF1m3RTqrE5",
+        "https://static01.nyt.com/images/2021/03/12/arts/11nft-auction-cryptopunks-print/11nft-auction-cryptopunks-print-articleLarge.jpg?quality=75&auto=webp&disable=upscale",
       price: "0.03",
-      currentlySelling: "True",
-      address: "0xe81Bf5A757CB4f7F82a2F23b1e59bE45c33c5b13",
+      address: "0xe81Bf5A757CB4f7F82a2F23b1e59bE45c33c5b13", // a dummy wallet address
     },
     {
       name: "NFT#2",
-      description: "Alchemy's Second NFT",
-      website: "http://axieinfinity.io",
+      description: "Suvisa Second NFT",
       image:
-        "https://gateway.pinata.cloud/ipfs/QmdhoL9K8my2vi3fej97foiqGmJ389SMs55oC5EdkrxF2M",
+        "https://www.cnet.com/a/img/resize/5a9287797e44d98efa098c9c22ad9857a7cfb9e4/2021/11/29/f566750f-79b6-4be9-9c32-8402f58ba0ef/richerd.png?auto=webp&width=1200",
       price: "0.03",
-      currentlySelling: "True",
       address: "0xe81Bf5A757C4f7F82a2F23b1e59bE45c33c5b13",
     },
     {
       name: "NFT#3",
-      description: "Alchemy's Third NFT",
-      website: "http://axieinfinity.io",
+      description: "Suvisa Third NFT",
       image:
-        "https://gateway.pinata.cloud/ipfs/QmTsRJX7r5gyubjkdmzFrKQhHv74p5wT9LdeF1m3RTqrE5",
+        "https://cloudfront-us-east-2.images.arcpublishing.com/reuters/7GBCHQUCEROJDPEVYQW7XG7VAE.jpg",
       price: "0.03",
-      currentlySelling: "True",
       address: "0xe81Bf5A757C4f7F82a2F23b1e59bE45c33c5b13",
     },
   ];
